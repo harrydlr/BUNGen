@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 from numpy.typing import ArrayLike
 from numpy import array, fill_diagonal, triu, repeat
 from .network_generator import network_generator
@@ -16,25 +16,23 @@ class NetworkGenerator:
     block_number: int
     P: float
     mu: float
-    gamma: float
+    y_block_nodes_vec: list
+    x_block_nodes_vec: list
     bipartite: bool
-    min_block_size: int
     fixedConn: bool
     link_density: float
 
-    def get_block_sizes(self) -> tuple[List[int], List[int]]:
+    def get_block_sizes(self) -> Tuple[List[int], List[int]]:
         self.cy = heterogenousBlockSizes(
-            self.block_number, self.rows, gamma=self.gamma, min_block_size=self.min_block_size
-        )
+            "y", self.block_number, self.rows, self.y_block_nodes_vec)
         if self.rows == self.columns:
             self.cx = self.cy
         else:
             self.cx = heterogenousBlockSizes(
-                self.block_number, self.columns, gamma=self.gamma, min_block_size=self.min_block_size
-            )
+                "x", self.block_number, self.columns, self.x_block_nodes_vec)
         return self.cx, self.cy
 
-    def synthetic_network(self) -> tuple[ArrayLike, ArrayLike,List[int],List[int]]:
+    def synthetic_network(self) -> Tuple[ArrayLike, ArrayLike, List[int], List[int]]:
         Mij = network_generator(self.rows, self.columns, self.block_number, self.cy, self.cx, self.xi, self.P, self.mu)
         Mrand = array(uniform(0, 1, size=(self.rows, self.columns)))
         labelRows = repeat(range(len(self.cy)),self.cy).tolist()
@@ -67,7 +65,7 @@ class NetworkGenerator:
         if self.fixedConn and self.link_density>1:
             raise ValueError("If parameter 'fixedConn' is True, then 'link_density' cannot be greater than 1")
     
-    def __call__(self, **kwargs) -> tuple[ArrayLike, ArrayLike, List[int], List[int]]:
+    def __call__(self, **kwargs) -> Tuple[ArrayLike, ArrayLike, List[int], List[int]]:
         for param in self.__annotations__.keys():
             if param in kwargs:
                 setattr(self, param, kwargs[param])
@@ -88,9 +86,9 @@ class NetworkGenerator:
         block_number: int,
         P: float,
         mu: float,
-        gamma: float,
+        y_block_nodes_vec: list,
+        x_block_nodes_vec:list,
         bipartite: bool,
-        min_block_size: int,
         fixedConn: bool,
         link_density: float,
     ):
@@ -100,9 +98,9 @@ class NetworkGenerator:
             block_number=block_number,
             P=P,
             mu=mu,
-            gamma=gamma,
+            y_block_nodes_vec=y_block_nodes_vec,
+            x_block_nodes_vec=x_block_nodes_vec,
             bipartite=bipartite,
-            min_block_size=min_block_size,
             fixedConn=fixedConn,
             link_density=link_density,
         )()
