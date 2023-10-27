@@ -14,7 +14,7 @@ class NetworkGenerator:
     rows: int
     columns: int
     block_number: int
-    P: float
+    P: list
     mu: float
     y_block_nodes_vec: list
     x_block_nodes_vec: list
@@ -69,8 +69,33 @@ class NetworkGenerator:
         for param in self.__annotations__.keys():
             if param in kwargs:
                 setattr(self, param, kwargs[param])
-        
-        self.P = round(self.P, 2)
+
+        # Check P is right
+        # Check P is float/int or list
+        if not isinstance(self.P, (float, list)):
+            raise Exception("P must be a float or a list of floats")
+        # If P is float, create a list of length block_number with P as values
+        if isinstance(self.P, float):
+            # Check that P is in range
+            if float(0) >= self.P or self.P >= float(1):
+                raise Exception("P values must be in range [0,1]")
+            # Create list of P values
+            self.P = [self.P for i in range(self.block_number)]
+        # If P is a list
+        else:
+            # Check that list length is equal to number of blocks
+            if not len(self.P)==self.block_number:
+                raise Exception(f"List P must have a length of {self.block_number} "
+                                f"but it has a length of {len(self.P)}")
+            # Check that all values of list P are float
+            if not all(isinstance(n, float) for n in self.P):
+                raise Exception("List P must contain only float")
+            # Check that list P values are in range
+            if not all(n >= float(0) and n <= float(1) for n in self.P):
+                raise Exception("P values must be in range [0,1]")
+        # Round P values
+        self.P = [round(num, 2) for num in self.P]
+        # Round mu
         self.mu = round(self.mu, 2)
 
         if not self.bipartite and self.columns != self.rows:
@@ -84,7 +109,7 @@ class NetworkGenerator:
         rows: int,
         columns: int,
         block_number: int,
-        P: float,
+        P: list,
         mu: float,
         y_block_nodes_vec: list,
         x_block_nodes_vec:list,

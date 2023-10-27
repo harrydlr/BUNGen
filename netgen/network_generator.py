@@ -17,7 +17,7 @@ def network_generator(
     cy: List[int],
     cx: List[int],
     xi: float,
-    P: float,
+    P: list,
     mu: float,
 ) -> ArrayLike:
     """
@@ -86,15 +86,16 @@ def network_generator(
         j, i = indices((cy[ix], cx[ix]))
         
         Pr = (
-            (P * le[ix]) / (lb[ix] - le[ix] + (P * le[ix]))
-            if (lb[ix] - le[ix] + (P * le[ix])) != 0
+            (P[ix] * le[ix]) / (lb[ix] - le[ix] + (P[ix] * le[ix]))
+            if (lb[ix] - le[ix] + (P[ix] * le[ix])) != 0
             else 0
         )
         # heaviside function to produce the nested structure
         H = ((j[::-1, :]) / cy[ix]) >= ballcurve((i / cx[ix]), xi)
 
         # prob of having a link within blocks
-        p_intra = ((1 - P + (P * Pr)) * H + Pr * (1 - H)) * (1 - Pi)
+        # Tendremos un p_intra distinto por cada bloque
+        p_intra = ((1 - P[ix] + (P[ix] * Pr)) * H + Pr * (1 - H)) * (1 - Pi)
         M_no[cscy[ix] : cscy[ix + 1], cscx[ix] : cscx[ix + 1]] = p_intra
-
+        print("breakpoint")
     return M_no
