@@ -97,5 +97,4 @@ def network_generator(
         # Tendremos un p_intra distinto por cada bloque
         p_intra = ((1 - P[ix] + (P[ix] * Pr)) * H + Pr * (1 - H)) * (1 - Pi)
         M_no[cscy[ix] : cscy[ix + 1], cscx[ix] : cscx[ix + 1]] = p_intra
-        print("breakpoint")
     return M_no

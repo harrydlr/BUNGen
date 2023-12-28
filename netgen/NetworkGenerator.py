@@ -23,13 +23,25 @@ class NetworkGenerator:
     link_density: float
 
     def get_block_sizes(self) -> Tuple[List[int], List[int]]:
+        # Check Block number is integer and greater than 1
+        if isinstance(self.block_number, int):
+            if self.block_number < 1:
+                raise Exception("Block number should be an integer equal or greater than 1")
+        else:
+            raise Exception("Block number should be an integer")
+        # Check rows and cols are int
+        if not isinstance(self.rows, int):
+            raise Exception(f'Rows and columns must be integers')
+        if not isinstance(self.columns, int):
+            raise Exception(f'Rows and columns must be integers')
+
         self.cy = heterogenousBlockSizes(
             "y", self.block_number, self.rows, self.y_block_nodes_vec)
-        if self.rows == self.columns:
-            self.cx = self.cy
-        else:
-            self.cx = heterogenousBlockSizes(
-                "x", self.block_number, self.columns, self.x_block_nodes_vec)
+        #if self.rows == self.columns:
+        #    self.cx = self.cy
+        #else:
+        self.cx = heterogenousBlockSizes(
+            "x", self.block_number, self.columns, self.x_block_nodes_vec)
         return self.cx, self.cy
 
     def synthetic_network(self) -> Tuple[ArrayLike, ArrayLike, List[int], List[int]]:
@@ -70,6 +82,12 @@ class NetworkGenerator:
             if param in kwargs:
                 setattr(self, param, kwargs[param])
 
+        # Check Block number is integer and greater than 1
+        if isinstance(self.block_number, int):
+            if self.block_number < 1:
+                raise Exception("Block number should be an integer equal or greater than 1")
+        else:
+            raise Exception("Block number should be an integer")
         # Check P is right
         # Check P is float/int or list
         if not isinstance(self.P, (float, list)):
@@ -77,7 +95,7 @@ class NetworkGenerator:
         # If P is float, create a list of length block_number with P as values
         if isinstance(self.P, float):
             # Check that P is in range
-            if float(0) >= self.P or self.P >= float(1):
+            if float(0) > self.P or self.P > float(1):
                 raise Exception("P values must be in range [0,1]")
             # Create list of P values
             self.P = [self.P for i in range(self.block_number)]
@@ -95,11 +113,32 @@ class NetworkGenerator:
                 raise Exception("P values must be in range [0,1]")
         # Round P values
         self.P = [round(num, 2) for num in self.P]
+
+        # Check mu is flot and is in range
+        if isinstance(self.mu, float):
+            if float(0) > self.mu or self.mu > float(1):
+                raise Exception("mu value must be in range [0,1]")
+        else:
+            raise Exception("mu must be a float")
         # Round mu
         self.mu = round(self.mu, 2)
-
+        # Check bipartite param
+        if not isinstance(self.bipartite, bool):
+            raise Exception("Bipartite parameter may be boolean")
+        # Unipartite check
         if not self.bipartite and self.columns != self.rows:
             raise ValueError("For unipartite configuration, the number of columns and rows must be the same.")
+
+        # Check FixedConn param
+        if not isinstance(self.fixedConn, bool):
+            raise Exception("fixedConn parameter may be boolean")
+
+        # Check mu is flot and is in range
+        if isinstance(self.link_density, float):
+            if float(0) > self.link_density or self.link_density > float(1):
+                raise Exception("link_density parameter may be in range [0,1]")
+        else:
+            raise Exception("link_density may be a float in range [0,1]")
 
         return self.synthetic_network()
 

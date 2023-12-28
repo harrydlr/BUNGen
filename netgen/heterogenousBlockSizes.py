@@ -36,7 +36,12 @@ def heterogenousBlockSizes(ax: str, B: int, N: int, block_nodes_vec: list = []) 
     output: list of ints
         a list containing numbers determining the size of each block
     """
-
+    # Check Block number is right
+    #if not isinstance(B, int) or B < 1:
+    #    raise Exception("Block number should be an integer equal or greater than 1")
+    # Check Rows and Cols are integers
+    if not isinstance(N, int):
+        raise Exception(f'Rows and columns must be integers')
     if len(block_nodes_vec) == 0:
         if N % B != 0:
             warnings.warn(f"The number of nodes is not divisible by B. {N} % {B} = {N%B}")
