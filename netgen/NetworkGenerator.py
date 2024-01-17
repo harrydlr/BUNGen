@@ -74,8 +74,15 @@ class NetworkGenerator:
     
     def __post_init__(self) -> None:
         self.get_block_sizes()
-        if self.fixedConn and self.link_density>1:
-            raise ValueError("If parameter 'fixedConn' is True, then 'link_density' cannot be greater than 1")
+        if isinstance(self.link_density, (int, float)):
+            if self.fixedConn:
+                if float(0) > self.link_density or self.link_density > float(1):
+                    raise ValueError("If parameter 'fixedConn' is True, then 'link_density' may be in range [0,1]")
+            else:
+                if self.link_density<=0:
+                    raise ValueError("If parameter 'fixedConn' is False, then 'link_density' should be greater than 0")
+        else:
+            raise Exception("link_density may be a float")
     
     def __call__(self, **kwargs) -> Tuple[ArrayLike, ArrayLike, List[int], List[int]]:
         for param in self.__annotations__.keys():
@@ -132,13 +139,6 @@ class NetworkGenerator:
         # Check FixedConn param
         if not isinstance(self.fixedConn, bool):
             raise Exception("fixedConn parameter may be boolean")
-
-        # Check mu is flot and is in range
-        if isinstance(self.link_density, float):
-            if float(0) > self.link_density or self.link_density > float(1):
-                raise Exception("link_density parameter may be in range [0,1]")
-        else:
-            raise Exception("link_density may be a float in range [0,1]")
 
         return self.synthetic_network()
 
