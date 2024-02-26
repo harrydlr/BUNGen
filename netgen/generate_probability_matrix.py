@@ -6,11 +6,10 @@ Created on Thu Sep 14 13:11:07 2017
 from typing import List
 from numpy import cumsum, indices, zeros
 from numpy.typing import ArrayLike
+from .utils import ballcurve
 
-from .ballcurve import ballcurve
 
-
-def network_generator(
+def generate_probability_matrix(
     rw: int,
     cl: int,
     b: int,
