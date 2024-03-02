@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List, Tuple
 from numpy.typing import ArrayLike
 from numpy import array, fill_diagonal, triu, repeat
+from math import ceil
 from .generate_probability_matrix import generate_probability_matrix
 from .utils import xiFunConn
 from numpy.random import uniform
@@ -24,10 +25,12 @@ class NetworkGenerator:
     def get_block_sizes(self) -> Tuple[List[int], List[int]]:
         self._validate_block_number()
         self._validate_rows_and_columns()
-        self._validate_block_nodes_vec("y", self.block_number, self.rows, self.y_block_nodes_vec)
-        self._validate_block_nodes_vec("x", self.block_number, self.columns, self.x_block_nodes_vec)
-        self.cy = self.y_block_nodes_vec
-        self.cx = self.x_block_nodes_vec
+        #self._validate_block_nodes_vec("y", self.block_number, self.rows, self.y_block_nodes_vec)
+        #self._validate_block_nodes_vec("x", self.block_number, self.columns, self.x_block_nodes_vec)
+        #self.cy = self.y_block_nodes_vec
+        #self.cx = self.x_block_nodes_vec
+        self.cy = self._validate_block_nodes_vec("y", self.block_number, self.rows, self.y_block_nodes_vec)
+        self.cx = self._validate_block_nodes_vec("x", self.block_number, self.columns, self.x_block_nodes_vec)
         return self.cx, self.cy
 
     def synthetic_network(self) -> Tuple[ArrayLike, ArrayLike, List[int], List[int]]:
@@ -49,7 +52,8 @@ class NetworkGenerator:
             self._validate_max_conn(max_conn, self.link_density)
             print(f"xi value for desired connectance: {xi:.2f}")
         else:
-            xi = round(self.link_density, 2)
+            #xi = round(self.link_density, 2)
+            xi = self.link_density
         return xi
 
     @property
@@ -117,7 +121,8 @@ class NetworkGenerator:
             raise ValueError("List P must contain only floats")
         if not all(0 <= n <= 1 for n in P):
             raise ValueError("P values must be in range [0, 1]")
-        return [round(num, 2) for num in P]
+        #return [round(num, 2) for num in P]
+        return P
 
     def _validate_P(self) -> None:
         if isinstance(self.P, float):
@@ -164,6 +169,16 @@ class NetworkGenerator:
         Raises:
             ValueError: If the validation fails.
         """
+        if B == 1 and not block_nodes_vec:
+            # Automatically assume all nodes for a single block
+            return [N]
+        if not block_nodes_vec:
+            # Assume equally sized blocks
+            if N % B != 0:
+                warnings.warn(f"The number of nodes is not divisible by B. {N} % {B} = {N % B}")
+                warnings.warn(f"The remaining {N % B} node(s) will be redistributed along the blocks.")
+            return [N // B + (ceil((N % B) / B) if N % B - b > 0 else 0) for b in range(B)]
+
         if not all(isinstance(n, int) for n in block_nodes_vec):
             raise ValueError(f'{ax}_block_nodes_vec list must contain integers')
         if len(block_nodes_vec) != B:
@@ -172,6 +187,7 @@ class NetworkGenerator:
         if sum(block_nodes_vec) != N:
             raise ValueError(f'The sum of elements in {ax}_block_nodes_vec must be {N} but '
                              f'it is {sum(block_nodes_vec)}')
+        return block_nodes_vec
 
     def _update_params(self, kwargs) -> None:
         for param in self.__annotations__.keys():
