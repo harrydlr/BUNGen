@@ -14,7 +14,7 @@ class NetworkGenerator:
     rows: int
     columns: int
     block_number: int
-    P: List[float]
+    p: List[float]
     mu: float
     y_block_nodes_vec: List[int]
     x_block_nodes_vec: List[int]
@@ -34,7 +34,7 @@ class NetworkGenerator:
         return self.cx, self.cy
 
     def synthetic_network(self) -> Tuple[ArrayLike, ArrayLike, List[int], List[int]]:
-        Mij = generate_probability_matrix(self.rows, self.columns, self.block_number, self.cy, self.cx, self.xi, self.P, self.mu)
+        Mij = generate_probability_matrix(self.rows, self.columns, self.block_number, self.cy, self.cx, self.xi, self.p, self.mu)
         Mrand = array(uniform(0, 1, size=(self.rows, self.columns)))
         labelRows = repeat(range(len(self.cy)), self.cy).tolist()
         labelCols = repeat(range(len(self.cx)), self.cx).tolist()
@@ -63,7 +63,7 @@ class NetworkGenerator:
     def __post_init__(self) -> None:
         self.get_block_sizes()
         self._validate_link_density()
-        self._validate_P()
+        self._validate_p()
         self._validate_mu()
         self._validate_bipartite()
 
@@ -79,7 +79,7 @@ class NetworkGenerator:
             rows: int,
             columns: int,
             block_number: int,
-            P: List[float],
+            p: List[float],
             mu: float,
             y_block_nodes_vec: List[int],
             x_block_nodes_vec: List[int],
@@ -91,7 +91,7 @@ class NetworkGenerator:
             rows=rows,
             columns=columns,
             block_number=block_number,
-            P=P,
+            p=p,
             mu=mu,
             y_block_nodes_vec=y_block_nodes_vec,
             x_block_nodes_vec=x_block_nodes_vec,
@@ -109,26 +109,26 @@ class NetworkGenerator:
         if not isinstance(self.rows, int) or not isinstance(self.columns, int):
             raise ValueError("Rows and columns must be integers")
 
-    def validate_single_P(self, P: float) -> List[float]:
-        if not (0 <= P <= 1):
-            raise ValueError("P value must be in range [0, 1]")
-        return [P] * self.block_number
+    def validate_single_p(self, p: float) -> List[float]:
+        if not (0 <= p <= 1):
+            raise ValueError("p value must be in range [0, 1]")
+        return [p] * self.block_number
 
-    def validate_list_P(self, P: List[float]) -> List[float]:
-        if len(P) != self.block_number:
-            raise ValueError(f"List P must have a length of {self.block_number}, but it has a length of {len(P)}")
-        if not all(isinstance(n, float) for n in P):
-            raise ValueError("List P must contain only floats")
-        if not all(0 <= n <= 1 for n in P):
-            raise ValueError("P values must be in range [0, 1]")
+    def validate_list_p(self, p: List[float]) -> List[float]:
+        if len(p) != self.block_number:
+            raise ValueError(f"List p must have a length of {self.block_number}, but it has a length of {len(p)}")
+        if not all(isinstance(n, float) for n in p):
+            raise ValueError("List p must contain only floats")
+        if not all(0 <= n <= 1 for n in p):
+            raise ValueError("p values must be in range [0, 1]")
         #return [round(num, 2) for num in P]
-        return P
+        return p
 
-    def _validate_P(self) -> None:
-        if isinstance(self.P, float):
-            self.P = self.validate_single_P(self.P)
-        elif isinstance(self.P, list):
-            self.P = self.validate_list_P(self.P)
+    def _validate_p(self) -> None:
+        if isinstance(self.p, float):
+            self.p = self.validate_single_p(self.p)
+        elif isinstance(self.p, list):
+            self.p = self.validate_list_p(self.p)
         else:
             raise ValueError("P must be a float or a list of floats")
 

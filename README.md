@@ -31,25 +31,27 @@ A numpy matrix that corresponds to the binary synthetic adjacency matrix (biadja
 ## Use examples: 
 ### To use as a library
 To produce a single network with desired parameters within a custom made script. User can proceed in the following way.
+
 ```python
 from netgen import NetworkGenerator
 
-M,*_ = NetworkGenerator.generate(500, 500, 4, bipartite=True, P=0.5, mu=0.5, 
-	gamma=2.5, min_block_size=0, fixedConn=False, link_density=2.45)
+M, *_ = NetworkGenerator.generate(500, 500, 4, bipartite=True, p=0.5, mu=0.5,
+								  gamma=2.5, min_block_size=0, fixedConn=False, link_density=2.45)
 
 ```
 Keep in mind that the parameters are positional. If user does not pass the parameters as named arguments, then order must be respected. If the user wants the function to return the matrix of link probabilities edit the line above by replacing M,* _ = with M,Pij,* _ =  or if the users wants the rows and columns partition labels edit the line above as M,Pij,rowsLabels,colsLabels = 
 
 To produce several networks of the same size and same number of blocks, while varying some parameter and keeping others fixed:
+
 ```python
 from netgen import NetworkGenerator
 
-gen =  NetworkGenerator(500, 500, 4, bipartite=True, P=0.5,mu=0.5, gamma=2.5, 
-	min_block_size=0, fixedConn=False, link_density=2.45)
+gen = NetworkGenerator(500, 500, 4, bipartite=True, p=0.5, mu=0.5, gamma=2.5,
+                       min_block_size=0, fixedConn=False, link_density=2.45)
 
-for p in np.arange(0,1,0.2):
-     M,*_ = gen(P=p)
-     # do something with each M (plot, save, append, etc)
+for p in np.arange(0, 1, 0.2):
+    M, *_ = gen(P=p)
+    # do something with each M (plot, save, append, etc)
 
 ```
 

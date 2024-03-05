@@ -32,12 +32,12 @@ def generate_list_with_sum(m, n):
 
 
 # Function to run your script with different parameters
-def run_script(rows, columns, block_number, bipartite, P, mu, y_block_nodes_vec, x_block_nodes_vec, fixedConn, link_density, target_error):
+def run_script(rows, columns, block_number, bipartite, p, mu, y_block_nodes_vec, x_block_nodes_vec, fixedConn, link_density, target_error):
     try:
         # Generate network
-        M_t, Pij_t, crows_t, ccols_t = NetworkGenerator.generate(rows, columns, block_number, bipartite=bipartite, P=P, mu=mu,
-                                                         y_block_nodes_vec= y_block_nodes_vec, x_block_nodes_vec=x_block_nodes_vec,
-                                                             fixedConn=fixedConn, link_density=link_density)
+        M_t, Pij_t, crows_t, ccols_t = NetworkGenerator.generate(rows, columns, block_number, bipartite=bipartite, p=p, mu=mu,
+                                                                 y_block_nodes_vec= y_block_nodes_vec, x_block_nodes_vec=x_block_nodes_vec,
+                                                                 fixedConn=fixedConn, link_density=link_density)
 
         # Save adjacency matrix plot
         title = f'{rows}_{columns}_{block_number}_{bipartite}_{mu}_{fixedConn}_{link_density}'
@@ -79,11 +79,11 @@ def generate_right_random_parameter_set(size):
     block_number=rows+cols
     while block_number>min(rows, cols):
         block_number = random.randint(1, size)
-    # P variable
+    # p variable
     if random.choice([True, False]):
-        P = random.uniform(0, 1)
+        p = random.uniform(0, 1)
     else:
-        P = [random.uniform(0, 1) for _ in range(block_number)]
+        p = [random.uniform(0, 1) for _ in range(block_number)]
     # mu
     mu = random.uniform(0, 1)
     # y_block_nodes_vec variable
@@ -96,13 +96,13 @@ def generate_right_random_parameter_set(size):
     link_density = random.uniform(0.01, 1)
     #
     target_error = None
-    return rows, cols, block_number, bipartite, P, mu, y_block_nodes_vec,  x_block_nodes_vec, fixedConn, link_density, target_error
+    return rows, cols, block_number, bipartite, p, mu, y_block_nodes_vec,  x_block_nodes_vec, fixedConn, link_density, target_error
 
 def generate_wrong_random_parameter_set(size):
-    error_list = ["bipartite_var_error","unipartite_error", "size_error", "block_number_error", "P_error", "mu_error", "y_block_nodes_vec",  "x_block_nodes_vec",  "fixedConn_error", "link_density_error"]
+    error_list = ["bipartite_var_error","unipartite_error", "size_error", "block_number_error", "p_error", "mu_error", "y_block_nodes_vec",  "x_block_nodes_vec",  "fixedConn_error", "link_density_error"]
     selected_error = np.random.choice(error_list)
     # Generate random parameters
-    rows, cols, block_number, bipartite, P, mu, y_block_nodes_vec,  x_block_nodes_vec, fixedConn, link_density, target_error = generate_right_random_parameter_set(size)
+    rows, cols, block_number, bipartite, p, mu, y_block_nodes_vec,  x_block_nodes_vec, fixedConn, link_density, target_error = generate_right_random_parameter_set(size)
     # bipartite variable error
     if selected_error=="bipartite_var_error":
         target_error = "bipartite_var_error"
@@ -128,16 +128,16 @@ def generate_wrong_random_parameter_set(size):
     elif selected_error == "block_number_error":
         target_error = "block_number_error"
         block_number = np.random.choice([np.random.uniform(-1000, 0), ["True"], str(random.randint(0, 10)), rows+cols])
-    # P variable error
-    elif selected_error == "P_error":
-        target_error = "P_error"
+    # p variable error
+    elif selected_error == "p_error":
+        target_error = "p_error"
         if random.choice([True, False]):
-            P = np.random.choice([np.random.uniform(-1000, -1), np.random.uniform(2, 1000), ["True"], str(random.randint(0, 1))])
+            p = np.random.choice([np.random.uniform(-1000, -1), np.random.uniform(2, 1000), ["True"], str(random.randint(0, 1))])
         else:
             aux_block_number = block_number
             while aux_block_number == block_number:
                 aux_block_number = random.randint(1, block_number+100)
-            P = [random.uniform(0, 1) for _ in range(aux_block_number)]
+            p = [random.uniform(0, 1) for _ in range(aux_block_number)]
     # mu variable error
     elif selected_error == "mu_error":
         target_error = "mu_error"
@@ -197,7 +197,7 @@ def generate_wrong_random_parameter_set(size):
             link_density = np.random.choice([np.random.uniform(-1000, -1), random.uniform(1.1, 10)])
         else:
             link_density = np.random.choice([np.random.uniform(-1000, 0)])
-    return rows, cols, block_number, bipartite, P, mu, y_block_nodes_vec,  x_block_nodes_vec, fixedConn, link_density, target_error
+    return rows, cols, block_number, bipartite, p, mu, y_block_nodes_vec,  x_block_nodes_vec, fixedConn, link_density, target_error
 
 # Example usage to generate 100 sets of parameters
 n_size = 100  # Adjust as needed
