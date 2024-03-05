@@ -175,8 +175,8 @@ class NetworkGenerator:
         if not block_nodes_vec:
             # Assume equally sized blocks
             if N % B != 0:
-                warnings.warn(f"The number of nodes is not divisible by B. {N} % {B} = {N % B}")
-                warnings.warn(f"The remaining {N % B} node(s) will be redistributed along the blocks.")
+                warnings.warn(f"The number of nodes is not divisible by {B}. {N} % {B} = {N % B}", UserWarning, stacklevel=2)
+                warnings.warn(f"The remaining {N % B} node(s) will be redistributed along the blocks.", UserWarning, stacklevel=2)
             return [N // B + (ceil((N % B) / B) if N % B - b > 0 else 0) for b in range(B)]
 
         if not all(isinstance(n, int) for n in block_nodes_vec):
