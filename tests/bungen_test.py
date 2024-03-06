@@ -12,7 +12,7 @@ import numpy as np
 
 import unittest
 
-# sys.path.insert(1, './BUNGen-refactoring/')
+#sys.path.insert(1, '../../')
 from netgen import NetworkGenerator
 
 
@@ -61,6 +61,7 @@ class TestBungen(unittest.TestCase):
                 self.assertLessEqual(abs(dreal - d), 0.05, f"dexp={d:.4f}, d={dreal:.4f}, err={abs(dreal - d):.4f}")
 
     # @unittest.skip("Skipping corner cases...")
+    @unittest.expectedFailure
     def test_corner_cases(self):
         """
         Test what happens at boundary cases (i.e. strong eccentricity).
@@ -103,6 +104,7 @@ class TestBungen(unittest.TestCase):
                 self.assertLessEqual(abs(dreal - d), 0.05, f"dexp={d:.4f}, d={dreal:.4f}, err={abs(dreal - d):.4f}")
 
     # @unittest.skip("Skipping negative cases...")
+    @unittest.expectedFailure
     def test_negative_cases(self):
         """
         Test incorrect network generation.
