@@ -1,8 +1,6 @@
-# TO BE CHANGED:
-#  BUNGen: Bipartite and Unipartite Network Generator
+# BUNGen: Synthetic generator for structured ecological networks
 
-Generate synthetic networks with predetermined nested, modular or in-block nested structure, with different levels of noise. This code employs a modification of the benchmark model introduced by Solé-Ribalta et al, PRE 2018 (https://doi.org/10.1103/PhysRevE.97.062302), in which one can produce networks with different block sizes (following a powerlaw), instead of networks with equally sized blocks. 
-
+Here we present the BUNGen (Bipartite and Unipartite Network Generator) software package to generate synthetic uni- and bipartite networks with varying level of specifiedplanted structures.
 The parameters of the model are the following.
         
 ## Inputs:
