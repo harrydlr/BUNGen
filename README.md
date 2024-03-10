@@ -1,9 +1,100 @@
 # BUNGen: Synthetic generator for structured ecological networks
 
-Here we present the BUNGen (Bipartite and Unipartite Network Generator) software package to generate synthetic uni- and bipartite networks with varying level of specifiedplanted structures.
-The parameters of the model are the following.
-        
+BUNGen (Bipartite and Unipartite Network Generator) is a Python software designed to address the methodological gap in synthetic network generation. BUNGen facilitates the creation of uni- and bipartite networks with varying levels of prescribed structures, offering a versatile tool for exploring the consequences of network architecture in ecological studies.
+For more details, refer to the paper #LinkToPaper#
+
+## Project Overview
+
+### Project Structure
+
+    .
+    ├── config                                # Path config files
+    │   ├── __init__.py
+    │   └── config.py                       
+    ├── Empirical_Net
+    │   ├── Pollination
+    │   └── Seed_Dispersal
+    ├── figures                              # Contains the BUNGen paper figures
+    ├── netgen                               # Main library
+    │   ├── NetworkGenerator.py              # Generate structured networks
+    │   ├── generate_probability_matrix.py   # Generate synthetic network matrix of link probabilities with the define parameters
+    │   ├── utils.py                         # Util functions used in NetworkGenerator
+    │   └── __init__.py
+    ├── scripts                              # 
+    │   ├── __init__.py
+    │   └── paper_figures_bungen.py          # Produce the BUNGen paper figures
+    ├── tests                                # Unitary tests
+    │   ├── __init__.py
+    │   └── bungen_test.py
+    ├── .gitignore
+    ├── README.md
+    ├── LICENSE
+    └── requirements.txt                    # Python software requirements
+
+## Getting Started
+
+To install and use BUNGen, follow the steps below
+
+### Prerequisites
+
+    - Python 3.8+
+    - Pip
+
+### Installation
+
+Clone the repository:
+
+    git clone https://github.com/COSIN3-UOC/BUNGen.git
+
+
+Install the required packages:
+
+    pip install -r requirements.txt
+
+| Parameter                  | Type          | Description                                                                                                     |
+|-----------------------------|---------------|-----------------------------------------------------------------------------------------------------------------|
+| rows                        | int           | Number of row nodes.                                                                                            |
+| cols                        | int           | Number of column nodes.                                                                                         |
+| block_number                | int (≥ 1)      | Number of prescribed blocks in the network.                                                                    |
+| p                           | float [0, 1] or list [0, 1]^(block_number)  | Noise outside a perfectly nested structure. If p is a list of length block_number, p[alpha] indicates the amount of this noise in block alpha.|
+| mu                          | float [0, 1]  | Inter-block (i.e., between-modules) noise.                                                                      |
+| y_block_nodes_vec           | list of integers (block_number) (Sum = rows)   | Number of nodes per block in the y-axis.                                                                   |
+| x_block_nodes_vec           | list of integers (block_number) (Sum = cols)   | Number of nodes per block in the x-axis.                                                                   |
+| bipartite                   | boolean       | True for bipartite networks, False for unipartite (default).                                                |
+| fixedConn                   | boolean       | True: to produce a network with prescribed connectance. False: to set a specific xi value.              |
+| link_density                | float         | If fixedConn = True, it specifies the desired connectance [0,1]. If fixedConn = False, it specifies xi > 0.        |
+
+## Usage
+| Parameter                  | Type                                       | Description                                                                                                                                                    |
+|-----------------------------|--------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `rows`                      | `int`                                      | Number of row nodes.                                                                                                                                           |
+| `cols`                      | `int`                                      | Number of column nodes.                                                                                                                                        |
+| `block_number`              | `int` $\geq 1$                             | Number of prescribed blocks in the network.                                                                                                                    |
+| `p`                         | `float` $\in [0, 1]`, or `list` $\in [0,1]^{block\_number}$ | Noise outside a perfectly nested structure. If `p` is a `list` of length `block_number`, `p[${\alpha}$]` indicates the amount of this noise in block $\alpha$. |
+| `mu`                        | `float` $\in [0, 1]$                        | Inter-block (i.e., between-modules) noise.                                                                                                                     |
+| `y_block_nodes_vec`         | `list` $\in \mathbb{N}^{block\_number}$ $\mid \sum_{i=1}^{block\_number} x_i = \texttt{rows}$   | Number of nodes per block in the y-axis.                                                                                                                       |
+| `x_block_nodes_vec`         | `list` $\in \mathbb{N}^{block\_number}$ $\mid \sum_{i=1}^{block\_number} x_i = \texttt{cols}$   | Number of nodes per block in the x-axis.                                                                                                                       |
+| `bipartite`                 | `boolean`                                  | `True` for bipartite networks, `False` for unipartite (default).                                                                                               |
+| `fixedConn`                 | `boolean`                                  | `True`: to produce a network with prescribed connetance. `False`: to set a specific $\xi$ value.                                                               |
+| `link_density`              | `float`                                    | If `fixedConn` = `True`, it specifies the desired connectance $\in [0,1]$. If `fixedConn` $=$ `False`, it specifies $\xi > 0$.                                 |
+
 ## Inputs:
+
+| Parameter                                     | Type                                                                                                                                 | Description                                                                                                                                                                                                          |
+|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| \texttt{\color{darkgray}rows}                 | \texttt{\color{magenta}int}                                                                                                          | number of row nodes.                                                                                                                                                                                                 |
+| \texttt{\color{darkgray}cols}                 | \texttt{\color{magenta}int}                                                                                                          | number of column nodes.                                                                                                                                                                                              |
+| \texttt{\color{darkgray}block\_number}        | \texttt{\color{magenta}int} $\geq 1$                                                                                                 | number of prescribed blocks in the network.                                                                                                                                                                          |
+| \texttt{\color{darkgray}p}                    | \texttt{\color{magenta}float} $\in [0, 1]$, or \texttt{\color{magenta}list} $\in [0,1]^{\texttt{block\_number}}$                     | noise outside a perfectly nested structure. If  \texttt{p} is a \texttt{\color{magenta}{list}} of length \texttt{block\_number},  \texttt{p[${\alpha}$]} indicates the amount of this noise in block $\alpha$.       |
+| \texttt{\color{darkgray}mu}                   | \texttt{\color{magenta}float} $\in [0, 1]$                                                                                           | inter-block ({\it i.e.}, between-modules) noise.                                                                                                                                                                     |
+| \texttt{\color{darkgray}y\_block\_nodes\_vec} | \texttt{\color{magenta}list} $ \in \mathbb{N}^{\texttt{block\_number}} \mid \sum_{i=1}^{\texttt{block\_number}} x_i = \texttt{rows}$ | number of nodes per block in the y-axis                                                                                                                                                                              |
+| \texttt{\color{darkgray}x\_block\_nodes\_vec} | \texttt{\color{magenta}list} $\in \mathbb{N}^{\texttt{block\_number}} \mid \sum_{i=1}^{\texttt{block\_number}} x_i = \texttt{cols}$  | number of nodes per block in the x-axis                                                                                                                                                                              |
+| \texttt{\color{darkgray}bipartite}            | \texttt{\color{blue}boolean}                                                                                                         | \texttt{\color{teal}True} for bipartite networks, \texttt{ \color{teal}False} for unipartite (default).                                                                                                              |
+| \texttt{\color{darkgray}fixedConn}            | \texttt{\color{blue}boolean}                                                                                                         | \texttt{\color{teal}True}: to produce a network with prescribed connetance. \texttt{\color{teal}False}: to set an specific $\xi$ value.                                                                              |
+| \texttt{\color{darkgray}link\_density}        | \texttt{\color{magenta}float}                                                                                                        | If \texttt{\color{darkgray}fixedConn} $=$ \texttt{\color{teal}True}, it specifies the desired connectance $\in [0,1]$. If \texttt{\color{darkgray}fixedConn} $=$ \texttt{\color{teal}False}, it specifies $\xi > 0$. |
+
+
+
 positional arguments:
 1) rows  = int: number of row nodes.
 2) cols  = int: number of column nodes.
@@ -19,12 +110,6 @@ positional arguments:
 
 ## Output:
 A numpy matrix that corresponds to the binary synthetic adjacency matrix (biadjacency for bipartite cases), and/or a numpy matrix with link probabilities, two lists of ints containing the rows and columns partition labels, respectively.
-
-## System Requirements 	
-	
-- Python >= 3.9.x
-- numpy >= 1.20.0
-- scipy = *
 
 ## Use examples: 
 ### To use as a library
@@ -77,7 +162,7 @@ python generate_synthetic_networks.py -h
 ```
 
 # Citations
-MJ Palazzi, A Lampo, A Solé-Ribalta, and J Borge-Holthoefer. To fill in
+Harry R. de los Ríos, María J. Palazzi, Aniello Lampo, Albert Solé-Ribalta, Javier Borge-Holthoefer
 
 A. Solé-Ribalta, CJ. Tessone, M S. Mariani, and J Borge-Holthoefer. Revealing in-block nestedness: Detection and benchmarking, Phys. Rev. E 97, 062302 (2018). DOI: [10.1103/PhysRevE.97.062302](https://doi.org/10.1103/PhysRevE.97.062302)
 

@@ -1,8 +1,4 @@
-"""
-Created on Thu Sep 14 13:11:07 2017
 
-@author: maria
-"""
 from typing import List
 from numpy import cumsum, indices, zeros
 from numpy.typing import ArrayLike
