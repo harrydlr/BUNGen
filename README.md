@@ -68,15 +68,15 @@ To produce a single network with desired parameters within a custom made script.
 	from netgen import NetworkGenerator
 	
 	gen = NetworkGenerator(rows=48,
-							columns=48,
-							block_number=4,
-							p=0.0,
-							mu=0.0,
-							y_block_nodes_vec=[20, 16, 8, 4],
-							x_block_nodes_vec=[16, 20, 4, 8],
-							bipartite=True,
-							fixedConn=False,
-							link_density=1.0)
+			columns=48,
+			block_number=4,
+			p=0.0,
+			mu=0.0,
+			y_block_nodes_vec=[20, 16, 8, 4],
+			x_block_nodes_vec=[16, 20, 4, 8],
+			bipartite=True,
+			fixedConn=False,
+			link_density=1.0)
 
 	Ma,* _ = gen()
 
