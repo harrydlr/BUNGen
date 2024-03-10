@@ -1,14 +1,54 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 24 20:36:46 2022
+# netgen/utils.py
 
-@author: mariapalazzi
-"""
-from numpy import linspace
+from numpy import power, linspace
 from scipy.interpolate import interp1d
 from typing import List
-from .xiConnRelationship import xiConnRelationship
+from numpy.typing import ArrayLike
+
+
+def ballcurve(x: ArrayLike, xi: float) -> ArrayLike:
+    """
+    function to generate the curve for the nested structure, given a shape
+    parameter xi. If xi= 1 is linear.
+    input:
+    ----------
+    x: 1D array, [0,1]
+        initial values to be evaluated on the function
+    xi: number, >=1
+        shape parameter of how stylised is the curve
+    output:
+    ----------
+    y: 1D array, [0,1]
+        evaluated function
+    """
+    return 1 - power(1 - power(x, 1 / xi), xi)
+
+
+def xiConnRelationship(rw: int, cl: int, xi: float) -> int:
+    """
+     Thi function calculates the connectance of a matrix (assuming B=1) for a given
+     nested profile given by the shape parameter xi
+
+     inputs:
+    cl: (int)
+         column number;
+     M: (int)
+         row number;
+     xi: (float)
+         nested profile;
+
+     OUTPUT
+     C: (float)
+         matrix connectance;
+    """
+    E = 0  # edge counter
+    for i in range(cl):
+        x = i / cl  # tessellate
+        y = ballcurve(x, xi)
+        for j in range(rw):
+            if j / rw >= y:
+                E += 1
+    return E
 
 
 def xiFunConn(
@@ -35,32 +75,24 @@ def xiFunConn(
          the matrix nestedness perfile;
     """
 
-    # total number of links
     links = C * rowTot * colTot
-
     xiList = linspace(0.001, 5, 100)
     edgeList = []
     for xi in xiList:
         E = 0.0  # edge counter
-        # block loop
         for i in range(len(rowsList)):
             blockRow = rowsList[i]
             blockCol = colsList[i]
-            # block connectance
             edgeBlock = xiConnRelationship(blockRow, blockCol, xi)
             E += edgeBlock
         edgeList.append(E)
 
-    # interpolation
     f = interp1d(edgeList, xiList)
 
-    # approximate input edge number to the interpolation range
     if links < min(edgeList):
         links = min(edgeList)
     elif links > max(edgeList):
         links = max(edgeList)
 
-    # output xi
     xi = f([links])[0]
-
     return xi

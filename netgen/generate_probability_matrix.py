@@ -1,23 +1,18 @@
-"""
-Created on Thu Sep 14 13:11:07 2017
 
-@author: maria
-"""
 from typing import List
 from numpy import cumsum, indices, zeros
 from numpy.typing import ArrayLike
+from .utils import ballcurve
 
-from .ballcurve import ballcurve
 
-
-def network_generator(
+def generate_probability_matrix(
     rw: int,
     cl: int,
     b: int,
     cy: List[int],
     cx: List[int],
     xi: float,
-    P: list,
+    p: list,
     mu: float,
 ) -> ArrayLike:
     """
@@ -50,7 +45,7 @@ def network_generator(
         The synthetic network matrix of link probabilities with the define parameters
     example:
     ---------
-    Mij=network_generator(rw,cl,B,xi,p,mu)
+    Mij=network_generator(rw,cl,B,cy, cx, xi,p,mu)
     """
 
     if rw < 3 or cl < 3:
@@ -77,7 +72,7 @@ def network_generator(
 
     cslb = sum(lb)
     Et=M_no.sum(dtype=int)
-    Pi = mu*(1 - cslb/(rw*cl))
+    p_i = mu*(1 - cslb/(rw*cl))
     p_inter = (mu*Et)/(rw*cl)
     for ix in range(int(b)):
         # prob of having a link outside blocks
@@ -86,15 +81,14 @@ def network_generator(
         j, i = indices((cy[ix], cx[ix]))
         
         Pr = (
-            (P[ix] * le[ix]) / (lb[ix] - le[ix] + (P[ix] * le[ix]))
-            if (lb[ix] - le[ix] + (P[ix] * le[ix])) != 0
+            (p[ix] * le[ix]) / (lb[ix] - le[ix] + (p[ix] * le[ix]))
+            if (lb[ix] - le[ix] + (p[ix] * le[ix])) != 0
             else 0
         )
         # heaviside function to produce the nested structure
         H = ((j[::-1, :]) / cy[ix]) >= ballcurve((i / cx[ix]), xi)
 
         # prob of having a link within blocks
-        # Tendremos un p_intra distinto por cada bloque
-        p_intra = ((1 - P[ix] + (P[ix] * Pr)) * H + Pr * (1 - H)) * (1 - Pi)
+        p_intra = ((1 - p[ix] + (p[ix] * Pr)) * H + Pr * (1 - H)) * (1 - p_i)
         M_no[cscy[ix] : cscy[ix + 1], cscx[ix] : cscx[ix + 1]] = p_intra
     return M_no
