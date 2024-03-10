@@ -67,18 +67,18 @@ Install the required packages:
 | `link_density`              | `float`                                    | If `fixedConn` = `True`, it specifies the desired connectance $\in [0,1]$. If `fixedConn` $=$ `False`, it specifies $\xi > 0$.                                 |
 
 ## Inputs:
-| Parameter                  | Type          | Description                                                                                                   |
-|----------------------------|---------------|---------------------------------------------------------------------------------------------------------------|
-| `rows`                     | `int`         | Number of row nodes.                                                                                          |
-| `cols`                     | `int`         | Number of column nodes.                                                                                       |
-| `block_number`             | `int` (≥ 1)    | Number of prescribed blocks in the network.                                                                  |
-| `p`                        | `float` [0, 1] or `list` [0, 1]^(block_number) | Noise outside a perfectly nested structure. If `p` is a list of length `block_number`, `p[α]` indicates the amount of this noise in block α. |
-| `mu`                       | `float` [0, 1] | Inter-block (i.e., between-modules) noise.                                                                   |
-| `y_block_nodes_vec`        | `list` (Sum = rows) | Number of nodes per block in the y-axis.                                                                   |
-| `x_block_nodes_vec`        | `list` (Sum = cols) | Number of nodes per block in the x-axis.                                                                   |
-| `bipartite`                | `boolean`     | `True` for bipartite networks, `False` for unipartite (default).                                              |
-| `fixedConn`                | `boolean`     | `True`: to produce a network with prescribed connectance. `False`: to set a specific $\xi$ value.            |
-| `link_density`             | `float`       | If `fixedConn` = `True`, specifies the desired connectance [0,1]. If `fixedConn` = `False`, specifies $\xi > 0$.|
+| Parameter               | Type                                | Description                                                                                                                                                  |
+|--------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `rows`                   | `int`                               | Number of row nodes.                                                                                                                                         |
+| `cols`                   | `int`                               | Number of column nodes.                                                                                                                                      |
+| `block_number`           | `int` $\geq 1$                      | Number of prescribed blocks in the network.                                                                                                                  |
+| `p`                      | `float` $\in [0, 1]$, or `list` $\in [0,1]^{block\_number}$ | Noise outside a perfectly nested structure. If `p` is a `list` of length `block_number`, `p[${\alpha}$]` indicates the amount of this noise in block $\alpha$. |
+| `mu`                     | `float` $\in [0, 1]$                 | Inter-block (i.e., between-modules) noise.                                                                                                                   |
+| `y_block_nodes_vec`      | `list` $\in \mathbb{N}^{block\_number}$ $\mid \sum_{i=1}^{block\_number} x_i = \texttt{rows}$ | Number of nodes per block in the y-axis.                                                 |
+| `x_block_nodes_vec`      | `list` $\in \mathbb{N}^{block\_number}$ $\mid \sum_{i=1}^{block\_number} x_i = \texttt{cols}$ | Number of nodes per block in the x-axis.                                                 |
+| `bipartite`              | `boolean`                           | `True` for bipartite networks, `False` for unipartite (default).                                                                                              |
+| `fixedConn`              | `boolean`                           | `True`: to produce a network with prescribed connectance. `False`: to set a specific $\xi$ value.                                                          |
+| `link_density`           | `float`                             | If `fixedConn` $=$ `True`, it specifies the desired connectance $\in [0,1]$. If `fixedConn` $=$ `False`, it specifies $\xi > 0$.                           |
 
 
 | Parameter                                     | Type                                                                                                                                 | Description                                                                                                                                                                                                          |
