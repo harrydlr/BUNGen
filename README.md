@@ -81,35 +81,19 @@ Install the required packages:
 | `link_density`           | `float`                             | If `fixedConn` $=$ `True`, it specifies the desired connectance $\in [0,1]$. If `fixedConn` $=$ `False`, it specifies $\xi > 0$.                           |
 
 
-\newcolumntype{C}{>{\centering\arraybackslash}X} % centered "X" column
-\begin{center}
-\begin{table}[!ht]
-\setlength\extrarowheight{2pt} % for a bit of visual "breathing space"
-\begin{tabularx}{\textwidth}{||c | c | C ||}
- \hline
-Parameter & Type & Description \\ [0.5ex] 
- \hline\hline
-  \texttt{\color{darkgray}rows} & \texttt{\color{magenta}int} & number of row nodes. \\ 
- \hline
- \texttt{\color{darkgray}cols} & \texttt{\color{magenta}int} & number of column nodes.  \\
- \hline
-   \texttt{\color{darkgray}block\_number} & \texttt{\color{magenta}int} $\geq 1$ & number of prescribed blocks in the network. \\
- \hline
- \texttt{\color{darkgray}p} &  \texttt{\color{magenta}float} $\in [0, 1]$, or \texttt{\color{magenta}list} $\in [0,1]^{\texttt{block\_number}}$  & noise outside a perfectly nested structure. If  \texttt{p} is a \texttt{\color{magenta}{list}} of length \texttt{block\_number},  \texttt{p[${\alpha}$]} indicates the amount of this noise in block $\alpha$.\\
- \hline
-  \texttt{\color{darkgray}mu} &  \texttt{\color{magenta}float} $\in [0, 1]$ & inter-block ({\it i.e.}, between-modules) noise. \\
-  \hline
- \texttt{\color{darkgray}y\_block\_nodes\_vec} & \texttt{\color{magenta}list} $ \in \mathbb{N}^{\texttt{block\_number}} \mid \sum_{i=1}^{\texttt{block\_number}} x_i = \texttt{rows}$ & number of nodes per block in the y-axis \\   \hline
-  \texttt{\color{darkgray}x\_block\_nodes\_vec} & \texttt{\color{magenta}list} $\in \mathbb{N}^{\texttt{block\_number}} \mid \sum_{i=1}^{\texttt{block\_number}} x_i = \texttt{cols}$ & number of nodes per block in the x-axis \\   \hline
-\texttt{\color{darkgray}bipartite} & \texttt{\color{blue}boolean} & \texttt{\color{teal}True} for bipartite networks, \texttt{ \color{teal}False} for unipartite (default). \\   \hline
-\texttt{\color{darkgray}fixedConn} & \texttt{\color{blue}boolean} &  \texttt{\color{teal}True}: to produce a network with prescribed connetance. \texttt{\color{teal}False}: to set an specific $\xi$ value.\\   \hline
-\texttt{\color{darkgray}link\_density} & \texttt{\color{magenta}float} & If \texttt{\color{darkgray}fixedConn} $=$ \texttt{\color{teal}True}, it specifies the desired connectance $\in [0,1]$. If \texttt{\color{darkgray}fixedConn} $=$ \texttt{\color{teal}False}, it specifies $\xi > 0$.\\[1ex] 
- \hline
-\end{tabularx}
- \caption{Description of synthetic benchmark input parameters}
-  \label{tab:1}
- \end{table}
-\end{center}
+| Parameter          | Type                                | Description                                                                                                                                                  |
+|---------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `rows`              | `int`                               | Number of row nodes.                                                                                                                                         |
+| `cols`              | `int`                               | Number of column nodes.                                                                                                                                      |
+| `block`&#95;`number` | `int` $\geq 1$                      | Number of prescribed blocks in the network.                                                                                                                  |
+| `p`                 | `float` $\in [0, 1]$, or `list` $\in [0,1]^{block\_number}$ | Noise outside a perfectly nested structure. If `p` is a `list` of length `block\_number`, `p[${\alpha}$]` indicates the amount of this noise in block $\alpha$. |
+| `mu`                | `float` $\in [0, 1]$                 | Inter-block (i.e., between-modules) noise.                                                                                                                   |
+| `y`&#95;`block`&#95;`nodes`&#95;`vec` | `list` $\in \mathbb{N}^{block\_number}$ $\mid \sum_{i=1}^{block\_number} x_i = \texttt{rows}$ | Number of nodes per block in the y-axis.                                   |
+| `x`&#95;`block`&#95;`nodes`&#95;`vec` | `list` $\in \mathbb{N}^{block\_number}$ $\mid \sum_{i=1}^{block\_number} x_i = \texttt{cols}$ | Number of nodes per block in the x-axis.                                   |
+| `bipartite`         | `boolean`                           | `True` for bipartite networks, `False` for unipartite (default).                                                                                              |
+| `fixedConn`         | `boolean`                           | `True`: to produce a network with prescribed connectance. `False`: to set a specific $\xi$ value.                                                          |
+| `link_density`      | `float`                             | If `fixedConn` $=$ `True`, it specifies the desired connectance $\in [0,1]$. If `fixedConn` $=$ `False`, it specifies $\xi > 0$.                           |
+
 
 
 positional arguments:
