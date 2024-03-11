@@ -15,7 +15,7 @@ For more details, refer to the paper #LinkToPaper#
     │   ├── Pollination
     │   └── Seed_Dispersal
     ├── figures                              # Contains the BUNGen paper figures
-    ├── netgen                               # Main library
+    ├── netgen                               # Source files
     │   ├── NetworkGenerator.py              # Generate structured networks
     │   ├── generate_probability_matrix.py   # Generate synthetic network matrix of link probabilities with the define parameters
     │   ├── utils.py                         # Util functions used in NetworkGenerator
