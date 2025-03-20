@@ -1,7 +1,10 @@
 # BUNGen: Synthetic generator for structured ecological networks
 
-BUNGen (Bipartite and Unipartite Network Generator) is a Python software designed to address the methodological gap in synthetic network generation. BUNGen facilitates the creation of uni- and bipartite networks with varying levels of prescribed structures, offering a versatile tool for exploring the consequences of network architecture in ecological studies.
-For more details, refer to the paper #LinkToPaper#
+BUNGen (Bipartite and Unipartite Network Generator) is a Python software designed to address the methodological gap in synthetic network generation. BUNGen facilitates the creation of uni- and bipartite networks with varying levels of prescribed structures, offering a versatile tool for exploring the consequences of network architecture in ecological studies. 
+
+This package includes a class definition, with its associated internal methods, which correspond to equations 1-2-3-4-5-6 in the main paper.
+
+For more details, refer to the main paper #LinkToPaper#
 
 ## Project Overview
 
@@ -52,7 +55,7 @@ Install the required packages:
     pip install -r requirements.txt
 
 
-## Usage
+## Implemantation and Usage
 ### Model inputs:
 ![Alt Text](readme_images/parameters_table.png)
 
