@@ -135,7 +135,7 @@ gen = NetworkGenerator(
 M, Pij, _, _ = gen()
 ```
 </td>
-<td><img src="SfigT2b.png" width="300"></td>
+<td><img src="readme_images/SfigT2b.png" width="300"></td>
 </tr> <tr> <td>
 
 ```python
@@ -154,7 +154,7 @@ gen = NetworkGenerator(
 M, Pij, _, _ = gen()
 ```
 </td>
-<td><img src="SfigT2c.png" width="300"></td>
+<td><img src="readme_images/SfigT2c.png" width="300"></td>
 </tr> </table>
 
 **Table S2**: *Exemplar network construction with BUNGen. Top: a noiseless (p = 0) nested network. Middle: a noisy (p > 0) nested network. Notice that, in the top and middle examples, block-related parameters are irrelevant (B = 1). Bottom: an Erd˝os-R´enyi (i.e., completely random) network (p = μ = 1), i.e. without any detectable structure.*
@@ -183,7 +183,7 @@ M, Pij, _, _ = gen()
 M, Pij, _, _ = gen()
 ```
 </td>
-<td><img src="SfigT3a.png" width="300"></td>
+<td><img src="readme_images/SfigT3a.png" width="300"></td>
 </tr> <tr> <td>
   
 ```python
@@ -202,7 +202,7 @@ M, Pij, _, _ = gen()
 M, Pij, _, _ = gen()
 ```
 </td>
-<td><img src="SfigT3b.png" width="300"></td>
+<td><img src="readme_images/SfigT3b.png" width="300"></td>
 </tr> <tr> <td>
 
   
@@ -222,7 +222,7 @@ gen = NetworkGenerator(
 M, Pij, _, _ = gen()
 ```
 </td>
-<td><img src="SfigT3c.png" width="300"></td>
+<td><img src="readme_images/SfigT3c.png" width="300"></td>
 </tr> </table>
 
 **Table S3**: *Some examples of the compartmentalised network construction with BUNGen. Top: a noisy (μ > 0)
@@ -243,7 +243,7 @@ Thus, if \(B = 1\), the density can be set to exactly 1 (complete matrix, since 
 From a practical perspective, BUNGen raises a `ValueError` exception when the code attempts to create a network with a prescribed density and an incompatible number of blocks. As a consequence, it is clear that we face a hard limit in some situations. For example, imagine that we intend to use the package to create a synthetic ensemble that mimics a real network of our interest, but in which we want to manipulate the structural patterns. Certainly, we can create such an ensemble while keeping the size and density of the original network and impose on it a nested, modular, in-block nested, or random architecture -- but the number of blocks will be limited by the density of the original network. Figure 1 (right) illustrates this: only below the \(1/B\) curve (green), it is possible to create synthetic networks -- with freedom to vary the other parameters (\(p\), \(\mu\), regular or heterogeneous block sizes).
 
 
-| <img src="Sfig_lim.jpg" alt="Correspondence between eccentricity and connectance (density)" width="400" /> |
+| <img src="readme_images/Sfig_lim.jpg" alt="Correspondence between eccentricity and connectance (density)" width="400" /> |
 |------------------------------------------------------------------------------------------------------------|
 
 **Figure S6**: *Left: illustrating the limits of the model regarding density. Indeed, the model can only create fully
@@ -261,7 +261,7 @@ In Figure~\ref{fig:ecc} (right), we observe that the model can deliver the desir
 In that region the density is clearly overestimated. Notably, for each eccentricity value in the x-axis we have built 20 different matrices, with varying $p$, $\mu$ and number of blocks.
 The green circles indicate the averages of the obtained densities.
 
-| ![Correspondence between eccentricity and connectance (density)](Sfig_den.jpg) | ![Effect of network size on density accuracy](Sfig_ecc.jpg) |
+| ![Correspondence between eccentricity and connectance (density)](readme_images/Sfig_den.jpg) | ![Effect of network size on density accuracy](readme_images/Sfig_ecc.jpg) |
 | --- | --- |
 **Figure S7**: *Left: correspondence between ξ and connectance (density) values. Such relationship, for B = 1,
 should be irrespective of network size, and the lines should collapse. However, it is clear that for smaller networks
