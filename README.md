@@ -263,6 +263,7 @@ The green circles indicate the averages of the obtained densities.
 
 | ![Correspondence between eccentricity and connectance (density)](readme_images/Sfig_den.jpg) | ![Effect of network size on density accuracy](readme_images/Sfig_ecc.jpg) |
 | --- | --- |
+
 **Figure S7**: *Left: correspondence between ξ and connectance (density) values. Such relationship, for B = 1,
 should be irrespective of network size, and the lines should collapse. However, it is clear that for smaller networks
 (N < 10), the discrete mapping of the unit ball equation (Eq. ??) produces misadjustments. Right: this panel
