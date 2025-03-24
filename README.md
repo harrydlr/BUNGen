@@ -116,7 +116,7 @@ gen = NetworkGenerator(
 M, Pij, _, _ = gen()
 ```
 </td>
-<td><img src="SfigT2a.png" width="300"></td>
+<td><img src="readme_images/SfigT2a.png" width="300"></td>
 </tr> <tr> <td>
 
 ```python
