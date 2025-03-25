@@ -56,7 +56,7 @@ Install the required packages:
 
 
 ## Implementation and Usage
-The class constructor `NetworkGenerator` requires several parameters to build the network object. A succinct description of these parameters is available in Table S1.
+The class constructor `NetworkGenerator` requires several parameters to build the network object. A succinct description of these parameters is available in Table **1**.
 
 Besides the common network parameters, such as network size (`rows` and `columns`) or the number of specified communities (`block_number`), other parameters to control noise, density, and the characteristics of the communities are included. The intra- and inter-community noise is controlled by parameters `p` and `mu`, conveniently corresponding to  *p* and *mu* as defined in Section II of the main text.
 
@@ -73,7 +73,7 @@ from which we obtain two *numpy* matrices:
 
 Each module is tagged as an integer in the range $[0, B-1]$. 
 If any of those output objects is not needed, they can be skipped by simply replacing the variable by **_**.
-To illustrate the behaviour of these parameters, Tables **S2** and **S3** place actual code and the obtained output side by side, with several examples how these parameters can be combined to obtain different network structures --nested, modular and in-block nested.
+To illustrate the behaviour of these parameters, Tables **2** and **3** place actual code and the obtained output side by side, with several examples how these parameters can be combined to obtain different network structures --nested, modular and in-block nested.
 
 
 
@@ -90,7 +90,7 @@ To illustrate the behaviour of these parameters, Tables **S2** and **S3** place 
 | fixedConn      | `boolean`                                                                                  | `True`: to produce a network with prescribed connectance. `False`: to set a specific ξ value.                                                        |
 | link_density   | `float`                                                                                    | If **fixedConn** = `True`, it specifies the desired connectance ∈ [0, 1]. If **fixedConn** = `False`, it specifies ξ > 0.                             |
 
-**Table S1**: *Description of synthetic benchmark input parameters*
+**Table 1**: *Description of synthetic benchmark input parameters*
 
 ### Example Usage
 
@@ -158,7 +158,7 @@ M, Pij, _, _ = gen()
 <td><img src="readme_images/SfigT2c.png" width="300"></td>
 </tr> </table>
 
-**Table S2**: *Exemplar network construction with BUNGen. Top: a noiseless (p = 0) nested network. Middle: a noisy (p > 0) nested network. Notice that, in the top and middle examples, block-related parameters are irrelevant (B = 1). Bottom: an Erd˝os-R´enyi (i.e., completely random) network (p = μ = 1), i.e. without any detectable structure.*
+**Table 2**: *Exemplar network construction with BUNGen. Top: a noiseless (p = 0) nested network. Middle: a noisy (p > 0) nested network. Notice that, in the top and middle examples, block-related parameters are irrelevant (B = 1). Bottom: an Erd˝os-R´enyi (i.e., completely random) network (p = μ = 1), i.e. without any detectable structure.*
 
 
 
@@ -226,7 +226,7 @@ M, Pij, _, _ = gen()
 <td><img src="readme_images/SfigT3c.png" width="300"></td>
 </tr> </table>
 
-**Table S3**: *Some examples of the compartmentalised network construction with BUNGen. Top: a noisy (μ > 0)
+**Table 3**: *Some examples of the compartmentalised network construction with BUNGen. Top: a noisy (μ > 0)
 modular network with 5 equally-sized blocks. Middle: an in-block nested network with 4 unevenly-sized blocks.
 Bottom: a mixed modular/in-block nested network with 5 blocks (low and high p).*
 
@@ -239,15 +239,17 @@ The generative model and software package come with some inherent limitations th
 E_{max} = \sum^B_{\alpha=1}r_{\alpha}c_{\alpha}
 \]
 
-Thus, if \(B = 1\), the density can be set to exactly 1 (complete matrix, since in this case \(r_{\alpha} = N\) and \(c_{\alpha} = M\)). In the most intuitive case, that of \(N = M\) and regularly-sized blocks, the maximum density \(d_{max}\) decays as \(B^{-1}\), see Figure 1 (left). 
+E_max = ∑_(α=1)^B (r_α c_α)
 
-From a practical perspective, BUNGen raises a `ValueError` exception when the code attempts to create a network with a prescribed density and an incompatible number of blocks. As a consequence, it is clear that we face a hard limit in some situations. For example, imagine that we intend to use the package to create a synthetic ensemble that mimics a real network of our interest, but in which we want to manipulate the structural patterns. Certainly, we can create such an ensemble while keeping the size and density of the original network and impose on it a nested, modular, in-block nested, or random architecture -- but the number of blocks will be limited by the density of the original network. Figure 1 (right) illustrates this: only below the \(1/B\) curve (green), it is possible to create synthetic networks -- with freedom to vary the other parameters (\(p\), \(\mu\), regular or heterogeneous block sizes).
+Thus, if B = 1, the density can be set to exactly 1 (complete matrix, since in this case r_α = N and c_α = M). In the most intuitive case, that of N = M and regularly-sized blocks, the maximum density d_max decays as B^{-1}, see Figure 1 (left). 
+
+From a practical perspective, BUNGen raises a `ValueError` exception when the code attempts to create a network with a prescribed density and an incompatible number of blocks. As a consequence, it is clear that we face a hard limit in some situations. For example, imagine that we intend to use the package to create a synthetic ensemble that mimics a real network of our interest, but in which we want to manipulate the structural patterns. Certainly, we can create such an ensemble while keeping the size and density of the original network and impose on it a nested, modular, in-block nested, or random architecture -- but the number of blocks will be limited by the density of the original network. Figure 1 (right) illustrates this: only below the 1/B curve (green), it is possible to create synthetic networks -- with freedom to vary the other parameters (**p**, **mu**, regular or heterogeneous block sizes).
 
 
 | <img src="readme_images/Sfig_lim.jpg" alt="Correspondence between eccentricity and connectance (density)" width="400" /> |
 |------------------------------------------------------------------------------------------------------------|
 
-**Figure S6**: *Left: illustrating the limits of the model regarding density. Indeed, the model can only create fully
+**Figure 6**: *Left: illustrating the limits of the model regarding density. Indeed, the model can only create fully
 connected blocks, and thus there is an upper limit of 1/B on the density to prescribe. Right: taking a large set of
 empirical networks (Web of Life [1]), we see that very few networks cannot have a compartmentalised synthetic
 counterpart (that is, with B > 1). The limitation is bound to networks with density above 0.5, which represent
@@ -256,7 +258,7 @@ size: 8).*
 
 
 The second caveat to the package is related to small network sizes ($N,M < 10$). To build an initially nested structure, the model relies on the unit ball equation (Eq.~\jbh{XX of the main text}), which is mapped onto the matrix's shape to decide which links exist and which do not.
-Such discretisation implies some loss: in Figure~\ref{fig:ecc} (left), it is apparent that density behaves as expected only for sizes $N = M > 10$.
+Such discretisation implies some loss: in Figure 6 (left), it is apparent that density behaves as expected only for sizes $N = M > 10$.
 Another way of looking at this undesired effect is by plotting the expected (prescribed) density for a wide range of eccentricity values ($N/M$) with $M,N \in [4, 200]$; the blue dashed vertical line marks the $N=M$ situation).
 In Figure~\ref{fig:ecc} (right), we observe that the model can deliver the desired density (0.1 in this example) for rather stretched matrices, but fails as soon as $M < 10$ (vertical red line on the right).
 In that region the density is clearly overestimated. Notably, for each eccentricity value in the x-axis we have built 20 different matrices, with varying $p$, $\mu$ and number of blocks.
@@ -265,7 +267,7 @@ The green circles indicate the averages of the obtained densities.
 | ![Correspondence between eccentricity and connectance (density)](readme_images/Sfig_den.jpg) | ![Effect of network size on density accuracy](readme_images/Sfig_ecc.jpg) |
 | --- | --- |
 
-**Figure S7**: *Left: correspondence between ξ and connectance (density) values. Such relationship, for B = 1,
+**Figure 7**: *Left: correspondence between ξ and connectance (density) values. Such relationship, for B = 1,
 should be irrespective of network size, and the lines should collapse. However, it is clear that for smaller networks
 (N < 10), the discrete mapping of the unit ball equation (Eq. ??) produces misadjustments. Right: this panel
 serves a double purpose. First, it evidences that even notably eccentric matrices do not distort the model’s capacity
