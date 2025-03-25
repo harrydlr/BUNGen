@@ -245,7 +245,7 @@ From a practical perspective, BUNGen raises a `ValueError` exception when the co
 | <img src="readme_images/Sfig_lim.jpg" alt="Correspondence between eccentricity and connectance (density)" width="400" /> |
 |------------------------------------------------------------------------------------------------------------|
 
-**Figure 6**: *Left: illustrating the limits of the model regarding density. Indeed, the model can only create fully
+**Figure 1**: *Left: illustrating the limits of the model regarding density. Indeed, the model can only create fully
 connected blocks, and thus there is an upper limit of 1/B on the density to prescribe. Right: taking a large set of
 empirical networks (Web of Life [1]), we see that very few networks cannot have a compartmentalised synthetic
 counterpart (that is, with B > 1). The limitation is bound to networks with density above 0.5, which represent
@@ -254,18 +254,18 @@ size: 8).*
 
 
 The second caveat to the package is related to small network sizes ($N,M < 10$). To build an initially nested structure, the model relies on the unit ball equation (Equation 1 of the main text), which is mapped onto the matrix's shape to decide which links exist and which do not.
-Such discretisation implies some loss: in Figure **7** (left), it is apparent that density behaves as expected only for sizes $N = M > 10$.
+Such discretisation implies some loss: in Figure **2** (left), it is apparent that density behaves as expected only for sizes $N = M > 10$.
 Another way of looking at this undesired effect is by plotting the expected (prescribed) density for a wide range of eccentricity values ($N/M$) with $M,N \in [4, 200]$; the blue dashed vertical line marks the $N=M$ situation.
-In Figure **7** (right), we observe that the model can deliver the desired density (0.1 in this example) for rather stretched matrices, but fails as soon as $M < 10$ (vertical red line on the right).
+In Figure **2** (right), we observe that the model can deliver the desired density (0.1 in this example) for rather stretched matrices, but fails as soon as $M < 10$ (vertical red line on the right).
 In that region the density is clearly overestimated. Notably, for each eccentricity value in the x-axis we have built 20 different matrices, with varying $p$, $\mu$ and number of blocks.
 The green circles indicate the averages of the obtained densities.
 
 | ![Correspondence between eccentricity and connectance (density)](readme_images/Sfig_den.jpg) | ![Effect of network size on density accuracy](readme_images/Sfig_ecc.jpg) |
 | --- | --- |
 
-**Figure 7**: *Left: correspondence between ξ and connectance (density) values. Such relationship, for B = 1,
+**Figure 2**: *Left: correspondence between ξ and connectance (density) values. Such relationship, for B = 1,
 should be irrespective of network size, and the lines should collapse. However, it is clear that for smaller networks
-(N < 10), the discrete mapping of the unit ball equation (Eq. ??) produces misadjustments. Right: this panel
+(N < 10), the discrete mapping of the unit ball equation (Equation 1 of the main paper) produces misadjustments. Right: this panel
 serves a double purpose. First, it evidences that even notably eccentric matrices do not distort the model’s capacity
 to reproduce prescribed densities. Rather, confirming the observation of the left panel, size is the limiting factor
 when it comes to inaccurate results. Particularly, the creation of an ensemble with thousands of networks with
