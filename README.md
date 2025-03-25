@@ -14,10 +14,6 @@ For more details, refer to the main paper #LinkToPaper#
     ├── config                                # Path config files
     │   ├── __init__.py
     │   └── config.py                       
-    ├── Empirical_Net
-    │   ├── Pollination
-    │   └── Seed_Dispersal
-    ├── figures                              # Contains the BUNGen paper figures
     ├── netgen                               # Source files
     │   ├── NetworkGenerator.py              # Generate structured networks
     │   ├── generate_probability_matrix.py   # Generate synthetic network matrix of link probabilities with the define parameters
