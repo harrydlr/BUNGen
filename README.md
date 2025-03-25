@@ -241,7 +241,7 @@ E_{max} = \sum^B_{\alpha=1}r_{\alpha}c_{\alpha}
 
 E_max = ∑_(α=1)^B (r_α c_α)
 
-E_max = $\sum_{α=1}^{B_{\alpha=1}}r_{\alpha}c_{\alpha}$
+$\E_max = sum_{α=1}^{B}r_{\alpha}c_{\alpha}$
 
 Thus, if B = 1, the density can be set to exactly 1 (complete matrix, since in this case r_α = N and c_α = M). In the most intuitive case, that of N = M and regularly-sized blocks, the maximum density d_max decays as B^{-1}, see Figure 1 (left). 
 
