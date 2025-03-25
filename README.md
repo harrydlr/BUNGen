@@ -241,6 +241,8 @@ E_{max} = \sum^B_{\alpha=1}r_{\alpha}c_{\alpha}
 
 E_max = ∑_(α=1)^B (r_α c_α)
 
+E_max = $\sum_{α=1}^{B_{\alpha=1}}r_{\alpha}c_{\alpha}
+
 Thus, if B = 1, the density can be set to exactly 1 (complete matrix, since in this case r_α = N and c_α = M). In the most intuitive case, that of N = M and regularly-sized blocks, the maximum density d_max decays as B^{-1}, see Figure 1 (left). 
 
 From a practical perspective, BUNGen raises a `ValueError` exception when the code attempts to create a network with a prescribed density and an incompatible number of blocks. As a consequence, it is clear that we face a hard limit in some situations. For example, imagine that we intend to use the package to create a synthetic ensemble that mimics a real network of our interest, but in which we want to manipulate the structural patterns. Certainly, we can create such an ensemble while keeping the size and density of the original network and impose on it a nested, modular, in-block nested, or random architecture -- but the number of blocks will be limited by the density of the original network. Figure 1 (right) illustrates this: only below the 1/B curve (green), it is possible to create synthetic networks -- with freedom to vary the other parameters (**p**, **mu**, regular or heterogeneous block sizes).
