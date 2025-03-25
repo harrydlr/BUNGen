@@ -233,17 +233,11 @@ Bottom: a mixed modular/in-block nested network with 5 blocks (low and high p).*
 
 ## *Caveats*: exceptions and inaccuracies
 
-The generative model and software package come with some inherent limitations that an end-user needs to take into account. The first of them is related to density. The way in which the model is set up, the maximum number of links in a generated network is exactly those that fit in the prescribed blocks, i.e. 
-
-\[
-E_{max} = \sum^B_{\alpha=1}r_{\alpha}c_{\alpha}
-\]
-
-E_max = ∑_(α=1)^B (r_α c_α)
+The generative model and software package come with some inherent limitations that an end-user needs to take into account. The first of them is related to density. The way in which the model is set up, the maximum number of links in a generated network is exactly those that fit in the prescribed blocks, i.e.
 
 $E_{max}$ = $\sum_{α=1}^{B}r_{\alpha}c_{\alpha}$
 
-Thus, if B = 1, the density can be set to exactly 1 (complete matrix, since in this case r_α = N and c_α = M). In the most intuitive case, that of N = M and regularly-sized blocks, the maximum density d_max decays as B^{-1}, see Figure 1 (left). 
+Thus, if B = 1, the density can be set to exactly 1 (complete matrix, since in this case $r_{α} = N$ and $c_{α} = M$). In the most intuitive case, that of N = M and regularly-sized blocks, the maximum density $d_{max}$ decays as $B^{-1}$, see Figure 1 (left). 
 
 From a practical perspective, BUNGen raises a `ValueError` exception when the code attempts to create a network with a prescribed density and an incompatible number of blocks. As a consequence, it is clear that we face a hard limit in some situations. For example, imagine that we intend to use the package to create a synthetic ensemble that mimics a real network of our interest, but in which we want to manipulate the structural patterns. Certainly, we can create such an ensemble while keeping the size and density of the original network and impose on it a nested, modular, in-block nested, or random architecture -- but the number of blocks will be limited by the density of the original network. Figure 1 (right) illustrates this: only below the 1/B curve (green), it is possible to create synthetic networks -- with freedom to vary the other parameters (**p**, **mu**, regular or heterogeneous block sizes).
 
@@ -259,10 +253,10 @@ only a 6% of the mentioned collection, and are mostly very small in size (averag
 size: 8).*
 
 
-The second caveat to the package is related to small network sizes ($N,M < 10$). To build an initially nested structure, the model relies on the unit ball equation (Eq.~\jbh{XX of the main text}), which is mapped onto the matrix's shape to decide which links exist and which do not.
-Such discretisation implies some loss: in Figure 6 (left), it is apparent that density behaves as expected only for sizes $N = M > 10$.
-Another way of looking at this undesired effect is by plotting the expected (prescribed) density for a wide range of eccentricity values ($N/M$) with $M,N \in [4, 200]$; the blue dashed vertical line marks the $N=M$ situation).
-In Figure~\ref{fig:ecc} (right), we observe that the model can deliver the desired density (0.1 in this example) for rather stretched matrices, but fails as soon as $M < 10$ (vertical red line on the right).
+The second caveat to the package is related to small network sizes ($N,M < 10$). To build an initially nested structure, the model relies on the unit ball equation (Equation 1 of the main text), which is mapped onto the matrix's shape to decide which links exist and which do not.
+Such discretisation implies some loss: in Figure **7** (left), it is apparent that density behaves as expected only for sizes $N = M > 10$.
+Another way of looking at this undesired effect is by plotting the expected (prescribed) density for a wide range of eccentricity values ($N/M$) with $M,N \in [4, 200]$; the blue dashed vertical line marks the $N=M$ situation.
+In Figure **7** (right), we observe that the model can deliver the desired density (0.1 in this example) for rather stretched matrices, but fails as soon as $M < 10$ (vertical red line on the right).
 In that region the density is clearly overestimated. Notably, for each eccentricity value in the x-axis we have built 20 different matrices, with varying $p$, $\mu$ and number of blocks.
 The green circles indicate the averages of the obtained densities.
 
